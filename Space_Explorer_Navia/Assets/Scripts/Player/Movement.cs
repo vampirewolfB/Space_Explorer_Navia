@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float m_HorizontalSpeed;
     [SerializeField] float m_JumpHeight;
     bool m_Jumped;
+    bool doubleJump;
 
     // Start is called before the first frame update
     void Start()
@@ -22,9 +23,18 @@ public class Movement : MonoBehaviour
     void Update()
     {
         m_HorizontalMovement = Input.GetAxis("Horizontal");
-        if (Input.GetKeyDown(KeyCode.Space) && m_GroundChecker.m_IsGrounded)
+
+        if (!Input.GetKeyDown(KeyCode.Space) && m_GroundChecker.m_IsGrounded)
         {
-            m_Jumped = true;
+            doubleJump = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+           if (m_GroundChecker.m_IsGrounded || doubleJump)
+           {
+                m_Jumped = true;
+                doubleJump = !doubleJump;
+           }
         }
     }
 
