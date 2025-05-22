@@ -6,6 +6,8 @@ public class Movement : MonoBehaviour
 {
     Rigidbody2D m_Rb;
     GroundChecker m_GroundChecker;
+    DoubleJumpCheck temp;
+
     [SerializeField] float m_HorizontalMovement;
     [SerializeField] float m_HorizontalSpeed;
     [SerializeField] float m_JumpHeight;
@@ -17,6 +19,7 @@ public class Movement : MonoBehaviour
     {
         m_Rb = GetComponent<Rigidbody2D>();
         m_GroundChecker = GetComponentInChildren<GroundChecker>();
+        temp = GetComponent<DoubleJumpCheck>();
     }
 
     // Update is called once per frame
@@ -33,7 +36,10 @@ public class Movement : MonoBehaviour
            if (m_GroundChecker.m_IsGrounded || doubleJump)
            {
                 m_Jumped = true;
-                doubleJump = !doubleJump;
+                if (temp.HasDoubleJump)
+                {
+                    doubleJump = !doubleJump;
+                }
            }
         }
     }
